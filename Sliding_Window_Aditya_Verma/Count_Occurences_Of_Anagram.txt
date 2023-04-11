@@ -1,0 +1,76 @@
+//{ Driver Code Starts
+// Initial Template for Java
+
+import java.io.*;
+import java.util.*;
+
+class GFG {
+    // Driver code
+    public static void main(String[] args) throws Exception {
+        BufferedReader br =
+            new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(br.readLine().trim());
+        while (t-- > 0) {
+            String txt = br.readLine().trim();
+            String pat = br.readLine().trim();
+
+            int ans = new Solution().search(pat, txt);
+
+            System.out.println(ans);
+        }
+    }
+}
+// } Driver Code Ends
+
+
+// User function Template for Java
+
+class Solution {
+
+    int search(String pat, String txt){
+        int totalCount = 0;
+        int i = 0;
+        int j = 0;
+        int k  = pat.length();
+        HashMap<Character, Integer> map = new HashMap<>();
+        char[] charArray = pat.toCharArray();
+        for(char c: charArray){
+            if(map.containsKey(c)){
+                map.put(c,map.get(c)+1);
+            }
+            else{
+                map.put(c,1);
+            }
+        }
+        char[] textArray = txt.toCharArray();
+        int mapCount = map.size();
+        while(j < txt.length()){
+            if(map.containsKey(textArray[j])){
+                map.put(textArray[j],map.get(textArray[j])-1);
+                if(map.get(textArray[j])==0){
+                    mapCount--;
+                }
+            }
+
+            if(j-i+1 < pat.length()){
+                j++;
+            }
+
+            else{
+                if(mapCount == 0){
+                    totalCount++;
+                }
+
+                if(map.containsKey(textArray[i])){
+                    map.put(textArray[i],map.get(textArray[i])+1);
+                    if(map.get(textArray[i])==1){
+                        mapCount++;
+                    }
+                }
+                i++;
+                j++;
+            }
+        }
+        return totalCount;
+    }
+}
