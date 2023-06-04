@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+
+int binarySearch(vector<int> &nums, int target, int start, int end){
+    while(start <= end){
+        int mid = start + (end-start)/2;
+
+        if(nums[mid] == target){
+            return mid;
+        }
+
+        else if(nums[mid] > target){
+            end = mid-1;
+        }
+        else{
+            start = mid+1;
+        }
+    }
+    return -1;
+}
+int main() {
+    int start = 0;
+    int end = 1;
+    vector<int> nums;
+    while(key > nums[end]){
+        start = end;
+        end = end*2;
+    }
+
+    int result = binarySearch(nums, target, start, end);
+    cout<<result<<endl;
+}
+
