@@ -1,0 +1,64 @@
+int findBloom(vector<int> &arr, int k, int m){
+	int bloom = 0;
+	int ans = 0;
+	for(int i=0; i<arr.size(); i++){
+		if(arr[i] <= k){
+			bloom++;
+		}
+		else{
+			ans+=bloom/m;
+			bloom = 0;
+		}
+	}
+	ans+=bloom/m;
+	return ans;
+}
+
+int findMinimum(vector<int> &arr){
+	int min = INT_MAX;
+
+	for(int i=0; i<arr.size(); i++){
+		if(arr[i] < min)
+			min = arr[i];
+	}
+
+	return min;
+}
+
+
+int findMaximum(vector<int> &arr){
+	int max = INT_MIN;
+
+	for(int i=0; i<arr.size(); i++){
+		if(arr[i] > max){
+			max = arr[i];
+		}
+	}
+	return max;
+}
+
+int roseGarden(vector<int> arr, int k, int m)
+{
+	if(m*k > arr.size())
+		return -1;
+
+	
+	int start = findMinimum(arr);
+	int end = findMaximum(arr);
+
+	int ans = -1;
+
+	while(start <= end){
+		int mid = start + (end-start)/2;
+		int bloom = findBloom(arr, mid, k);
+		
+		
+		if(bloom >= m){
+			ans = mid;
+			end = mid-1;
+		}
+		else
+			start = mid+1;
+	}
+	return ans;
+}
