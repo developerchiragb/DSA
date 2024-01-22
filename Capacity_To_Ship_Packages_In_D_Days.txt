@@ -1,0 +1,51 @@
+int findSum(vector<int> &weights){
+    int sum = 0;
+    for(int i=0; i< weights.size(); i++){
+        sum+=weights[i];
+    }
+    return sum;
+}
+
+int findMaximum(vector<int> &weights){
+    int maxi = INT_MIN;
+    for(int i=0; i< weights.size(); i++){
+        if(weights[i] > maxi){
+            maxi = weights[i];
+        }
+    }
+    return maxi;
+}
+
+int calculateNoOfDays(vector<int> & weights, int capacity){
+    int days = 1,load = 0;
+    for(int i=0; i<weights.size(); i++){
+        if(weights[i] + load > capacity){
+            days++;
+            load = weights[i];
+        }
+        else{
+            load+=weights[i];
+        }
+    }
+    return days;
+}
+
+int leastWeightCapacity(vector<int> &weights, int d)
+{
+    int start = findMaximum(weights);
+    int end = findSum(weights);
+    int ans = -1;
+    while(start <= end){
+        int mid = start + (end-start)/2;
+        // cout<<"mid"<<mid<<endl;
+        int requiredDays = calculateNoOfDays(weights, mid);
+        // cout<<requiredDays<<endl;
+        if(requiredDays <= d){
+            end = mid-1;
+        }
+        else{
+            start = mid+1;
+        }
+    }
+    return start;
+}
